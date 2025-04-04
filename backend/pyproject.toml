@@ -1,0 +1,19 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiogram>=3.17.0",
+    "alembic>=1.14.1",
+    "asyncpg>=0.30.0",
+    "faker>=36.1.1",
+    "fastapi[all]>=0.115.12",
+    "httpx>=0.28.1",
+    "psycopg2>=2.9.10",
+    "python-dotenv>=1.0.1",
+    "python-telegram-bot>=22.0",
+    "uvicorn>=0.34.0",
+    "uvloop>=0.21.0",
+]
