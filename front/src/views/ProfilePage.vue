@@ -1,11 +1,11 @@
 <script setup>
 import location from '@/svg/location.vue';
 import FooterNav from '@/components/FooterNav.vue';
-import { onMounted } from 'vue';
+// import { onMounted } from 'vue';
 
-onMounted(async () = {
+// onMounted(async () = {
   
-})
+// })
 
 </script>
 
@@ -42,12 +42,12 @@ onMounted(async () = {
       </div>
 
       <div class="edit_profile">
-        <span>Редактировать профиль</span>
+        <span>Настройки профиля</span>
       </div>
 
-      <div class="edit_profile">
+      <!-- <div class="edit_profile">
         <span>Редактировать профиль</span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -145,6 +145,7 @@ span {
       padding: 13px;
       border-radius: 15px;
       color: #65758b;
+     
     }
    
   }
