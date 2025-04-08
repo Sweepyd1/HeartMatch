@@ -4,10 +4,11 @@ from config import DATABASE_URL, TOKEN
 from database.Crud import Crud
 from database.database import DatabaseManager
 from fastapi import FastAPI
-from server.api import router
+# from server.api import router
 bot = Bot(token=TOKEN)
 app = FastAPI()
-app.include_router(router)
+
+# app.include_router(router)
 
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)

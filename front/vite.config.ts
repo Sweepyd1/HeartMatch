@@ -4,8 +4,17 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vite.dev/config/
+
 export default defineConfig({
+  server: {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE']
+    },
+    port: 5173, 
+    strictPort: true, 
+    allowedHosts: ['f4743c014f058f7d2151a457ef5387f9.serveo.net']
+  },
   plugins: [
     vue(),
     vueDevTools(),

@@ -12,14 +12,15 @@ from bot.keyboards.edit_profile import edit_profile
 from config import TOKEN
 from database.models import UserWithPhotos
 from fastapi import FastAPI, Request
-from loader import bot, db, dp, app
-import uvicorn
-import uvloop
-from utils.utils import get_profile
+from loader import bot, db, dp
+from aiogram.types import KeyboardButton, WebAppInfo, ReplyKeyboardMarkup
 
+from utils.utils import get_profile
 dp.include_router(main_router)
 
 
+
+   
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     is_exist = await db.is_exist_user(message.from_user.id)
@@ -34,12 +35,19 @@ async def command_start_handler(message: Message) -> None:
     await message.answer(
         f"Давайте вам найдем кого-нибудь!", reply_markup=start_seacrh_kb
     )
+    await message.answer(
+        "Откройте веб-приложение:",
+        reply_markup=keyboard
+    )
 
 
 @dp.message(Command("myprofile"))
 async def get_my_profile(message: Message):
     await get_profile(message.from_user.id, message)
-  
+    
+
+
+
 @dp.message(Command("profilesettings"))
 async def profile_settings(message: Message):
     user: UserWithPhotos = await db.get_my_profile(message.from_user.id)
@@ -52,7 +60,7 @@ async def profile_settings(message: Message):
         "Выберите параметр который хотите изменить:",
         reply_markup=edit_profile
     )
-   
+ 
 
 @dp.message(Command("help"))
 async def cmd_help(message: Message):
@@ -69,23 +77,29 @@ async def cmd_help(message: Message):
     )
 
 
-async def run_bot():
+web_app_btn = KeyboardButton(
+    text="Открыть приложение 🚀",
+    web_app=WebAppInfo(url="https://f4743c014f058f7d2151a457ef5387f9.serveo.net/#/profile")
+)
+
+
+keyboard = ReplyKeyboardMarkup(
+    keyboard=[[web_app_btn]],
+    resize_keyboard=True
+)
+
+
+
+
+async def main() -> None:
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    # await start_command()
     await dp.start_polling(bot)
+    
 
-async def run_server():
-    config = uvicorn.Config(app, host="0.0.0.0", port=8000)
-    server = uvicorn.Server(config)
-    await server.serve()
-
-async def main():
-    await asyncio.gather(
-        run_server(),
-        run_bot()
-    )
 
 if __name__ == "__main__":
-    uvloop.install()
+    import uvloop
 
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
     asyncio.run(main())
-
